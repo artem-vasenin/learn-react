@@ -9,19 +9,19 @@ let Addform = React.createClass({
   render: function(){
     return (
       <div className='add-form'>
-        <label className="label">
+        <label className='label'>
           <span className='label__text'>Заголовок</span>
           <input className='textfield textfield--title' />
         </label>
-        <label className="label">
+        <label className='label'>
           <span className='label__text'>Автор</span>
           <input className='textfield textfield--author' />
         </label>
-        <label className="label">
+        <label className='label'>
           <span className='label__text'>Дата печати</span>
           <input className='textfield textfield--date' />
         </label>
-        <label className="label">
+        <label className='label'>
           <span className='label__text'>Количество страниц</span>
           <input className='textfield textfield--pages' />
         </label>
