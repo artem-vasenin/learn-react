@@ -34,13 +34,26 @@ let Addform = React.createClass({
 });
 
 let Booklist = React.createClass({
+  edit: function(){
+    console.log('Редактирование');
+  },
+  delete: function(){
+    console.log('Удаление');
+  },
   render: function(){
     var data = this.props.data;
     var booksListTemplate;
     if(data.length){
       booksListTemplate = data.map(function(item, index){
         return (
-          <li className='list__item' key={index}>{item.author} <b>"{item.title}"</b> - {item.year}г ({item.pages} стр) <button className='button button--red'>Удалить</button></li>
+          <li className='list__item' key={index}>
+            <i className='list__index'>{index}</i>
+            {item.author} <b>"{item.title}"</b> - {item.year}г ({item.pages} стр)
+            <span className='list__buttons'>
+              <button onClick={this.edit} className='button button--green'>Редактировать</button>
+              <button onClick={this.del} className='button button--red'>Удалить</button>
+            </span>
+          </li>
         );
       });
     }else{
@@ -50,9 +63,9 @@ let Booklist = React.createClass({
       <div className='book-list'>
         <h2>Список книг</h2>
         <div className='book-list__table'>
-          <ul className='list'>
+          <ol className='list'>
             {booksListTemplate}
-          </ul>
+          </ol>
           <p><strong>Добавлено книг: {data.length}</strong></p>
         </div>
       </div>
@@ -63,10 +76,10 @@ let Booklist = React.createClass({
 let Library = React.createClass({
   render: function(){
     var books = [
-      // {author: 'Жуковский', title: 'Баллады', year: 2014, pages: 40},
-      // {author: 'Дяченко', title: 'Vite Nostra', year: 2007, pages: 450},
-      // {author: 'Олди', title: 'Герой должен быть один', year: 2000, pages: 560},
-      // {author: 'Стругацкие', title: 'Трудно быть богом', year: 1963, pages: 760}
+      {author: 'Жуковский', title: 'Баллады', year: 2014, pages: 40},
+      {author: 'Дяченко', title: 'Vite Nostra', year: 2007, pages: 450},
+      {author: 'Олди', title: 'Герой должен быть один', year: 2000, pages: 560},
+      {author: 'Стругацкие', title: 'Трудно быть богом', year: 1963, pages: 760}
     ];
 
     return (
