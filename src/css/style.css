@@ -92,7 +92,3 @@ h1, h2 {
   padding-right: 100px;
   position: relative;
 }
-
-.list__item:last-child {
-  border: none;
-}
