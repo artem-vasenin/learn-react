@@ -35,15 +35,18 @@ let Addform = React.createClass({
 
 let Booklist = React.createClass({
   render: function(){
+    var data = this.props.data;
+    var booksListTemplate = data.map(function(item, index){
+      return (
+        <li className='list__item' key={index}>{item.author} <b>"{item.title}"</b> - {item.year}г ({item.pages} стр) <button className='button button--red'>Удалить</button></li>
+      );
+    });
     return (
       <div className='book-list'>
         <h2>Список книг</h2>
         <div className='book-list__table'>
           <ul className='list'>
-            <li className='list__item'>Жуковский <b>"Баллады"</b> - 2014г (40 стр) <button className='button button--red'>Удалить</button></li>
-            <li className='list__item'>Дяченко <b>"Vite Nostra"</b> - 2007г (450 стр) <button className='button button--red'>Удалить</button></li>
-            <li className='list__item'>Олди <b>"Герой должен быть один"</b> - 2000г (560 стр) <button className='button button--red'>Удалить</button></li>
-            <li className='list__item'>Стругацкие <b>"Трудно быть богом"</b> - 1963г (760 стр) <button className='button button--red'>Удалить</button></li>
+            {booksListTemplate}
           </ul>
         </div>
       </div>
@@ -53,11 +56,18 @@ let Booklist = React.createClass({
 
 let Library = React.createClass({
   render: function(){
+    var books = [
+      {author: 'Жуковский', title: 'Баллады', year: 2014, pages: 40},
+      {author: 'Дяченко', title: 'Vite Nostra', year: 2007, pages: 450},
+      {author: 'Олди', title: 'Герой должен быть один', year: 2000, pages: 560},
+      {author: 'Стругацкие', title: 'Трудно быть богом', year: 1963, pages: 760}
+    ];
+
     return (
       <div className='library'>
         <h1>Библиотека</h1>
         <Addform />
-        <Booklist />
+        <Booklist data={books} />
       </div>
     );
   }
