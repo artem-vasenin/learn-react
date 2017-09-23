@@ -17,9 +17,9 @@ const Library = React.createClass({
 		booksArr.push(itemObj);
 		this.setState({data: booksArr});
 	},
-	updateBook: function(index, item) {
+	// updateBook: function(index, item) {
 
-	},
+	// },
 	deleteBook: function(index) {
 		let booksArr = this.state.data,
 			tmpData = this.state.data,
