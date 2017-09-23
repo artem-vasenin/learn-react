@@ -2,11 +2,19 @@ body {
   background: #fff;
 }
 
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
 h1, h2 {
   font-weight: 100;
   text-transform: uppercase;
   text-align: center;
   text-shadow: 1px 1px 1px #afafaf;
+}
+
+.hide {
+  display: none;
 }
 
 .library {
@@ -22,6 +30,10 @@ h1, h2 {
   padding: 15px;
   box-shadow: 0 3px 5px #8a8a8a;
   margin-bottom: 50px;
+}
+
+.add-form .button {
+  font-size: inherit;
 }
 
 .label {
@@ -48,13 +60,23 @@ h1, h2 {
 .button {
   display: inline-block;
   background: #507299;
-  border: none;
+  border: 1px solid transparent;
   color: white;
   text-transform: uppercase;
   padding: 5px;
   cursor: pointer;
   box-shadow: 0 3px 5px #888;
   margin-left: 5px;
+  font-size: 18px;
+  line-height: 18px;
+  min-width: 20px;
+}
+
+.button.disabled {
+  cursor: default;
+  background: none;
+  border-color: black;
+  color: black;
 }
 
 .button--red {
@@ -91,7 +113,7 @@ h1, h2 {
   display: block;
   padding: 10px 0;
   border-bottom: 1px solid #999;
-  padding-right: 210px;
+  padding-right: 110px;
   position: relative;
 }
 
@@ -110,4 +132,16 @@ h1, h2 {
   right: 0;
   top: 5px;
   text-align: right;
+}
+
+.desc {
+  padding-left: 30px;
+}
+
+.readmore {
+  color: inherit;
+}
+
+.readmore:hover {
+  color: blue;
 }
