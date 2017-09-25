@@ -12,57 +12,74 @@ const Library = React.createClass({
 			update: false
 		};
 	},
-	handlleAddBook: function(itemObj) {
+	handlleSaveBook: function(itemObj) {
 		const booksArr = this.state.data;
 		booksArr.push(itemObj);
-		this.setState({data: booksArr});
+    this.setState({data: booksArr});
+    this.handlleUpdate(false, false, 0);
 	},
-	handlleUpdateBook: function(index, itemObj) { 
-		this.setState({update: [index, itemObj]});
+	handlleUpdate: function(index, itemObj, flag) { 
+    switch(flag){
+      case 0: this.setState({update: false}); break;
+      case undefined: this.setState({update: {index: index, item: itemObj}}); break;
+    }
 	},
 	handlleDeleteBook: function(index) {
 		const booksArr = this.state.data,
-			i = index;
-			booksArr.splice(i, 1);
+          i = index;
+    booksArr.splice(i, 1);
 		this.setState({data: booksArr});
 	},
 	render: function(){
 		return (
 			<div className='library'>
 				<h1>Библиотека</h1>
-				<AddForm add={this.handlleAddBook} update={this.state.update} />
-				<BookList books={this.state.data} update={this.handlleUpdateBook} delete={this.handlleDeleteBook} />
+				<AddForm save={this.handlleSaveBook} update={this.state.update}  />
+				<BookList books={this.state.data} update={this.handlleUpdate} delete={this.handlleDeleteBook} />
 			</div>
 		);
 	}
 });
 
 const AddForm = React.createClass({
+  componentWillUpdate(nextProps, nextState){
+    if(nextProps.update === true){
+      this.setState({update: this.props.update});
+    }
+  },
 	getInitialState: function() {
 		return {
-			textValue:  '',
-      submit:     ' disabled',
-      title:      '',
-      author:     '',
-      year:       '',
-      pages:      '',
-      desc:       ''
+      submit:  ' disabled',
+      update: this.props.update,
+      title:   '',
+      author:  '',
+      year:    '',
+      pages:   '',
+      desc:    ''
 		};
 	},
-	handlleAddClick: function(e) {
-		e.preventDefault();
-		let title 	= this.state.title,
-			author 	  = this.state.author,
-			year 	    = this.state.year,
-			pages 	  = this.state.pages,
-			desc 	    = this.state.desc;
+	handlleSaveClick: function(e) {
+    e.preventDefault();
+    if(this.props.update){
+      console.log(this.props.update.item);
+      this.setState({title: this.props.update.item.title});
+      this.setState({author: this.props.update.item.author});
+      this.setState({year: this.props.update.item.year});
+      this.setState({pages: this.props.update.item.pages});
+      this.setState({desc: this.props.update.item.desc});
+    }
+    let title = this.state.title,
+      author 	= this.state.author,
+      year 	  = this.state.year,
+      pages 	= this.state.pages,
+      desc 	  = this.state.desc;
 		
 		if(this.state.submit === ' disabled' || (!title && !author)) return;
 
-    this.props.add({title: title, author: author, year: year || '---', pages: pages || '---', desc: desc || '---'});
+    this.props.save({title: title, author: author, year: year || '---', pages: pages || '---', desc: desc || '---'});
     
     this.setState({title:  ''}),
-    this.setState({author:  ''}),
+    this.setState({author: ''}),
     this.setState({year:   ''}),
     this.setState({pages:  ''}),
     this.setState({desc:   ''});
@@ -114,7 +131,7 @@ const AddForm = React.createClass({
 					<textarea className='textfield textfield--desc' name='desc' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} value={this.state.desc} ref='descField' ></textarea>
 				</label>
 				<div className='button-block'>
-					<button className={'button' + this.state.submit} onClick={this.handlleAddClick} ref='submit'>{!this.props.update ? 'Добавить книгу' : 'Редактировать'}</button>
+					<button className={'button' + this.state.submit} onClick={this.handlleSaveClick} ref='submit'>{!this.props.update ? 'Добавить книгу' : 'Редактировать'}</button>
 				</div>
 			</form>
 		);
@@ -150,7 +167,8 @@ const BookList = React.createClass({
 const Book = React.createClass({
 	getInitialState: function() {
 		return {
-			description: ' hide'
+      description: ' hide',
+      update: false
 		};
 	},
 	handlleReadmore: function(e) {
@@ -164,7 +182,8 @@ const Book = React.createClass({
 		this.props.delete(this.props.index);
 	},
 	handlleUpdate: function(){
-		this.props.update(this.props.index, this.props.item);
+    this.props.update(this.props.index, this.props.item);
+    this.setState({update: true});
 	},
 	render: function(){
 		const item = this.props.item,
