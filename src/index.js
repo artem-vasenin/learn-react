@@ -5,21 +5,22 @@ import './css/style.css';
 
 const container = document.getElementById('root');
 
-const Library = React.createClass({
+const Library 	= React.createClass({
 	getInitialState: function(){
 		return {
-			data: []
+			data: [],
+			update: false
 		};
 	},
 	addBook: function(itemObj) {
 		let booksArr = this.state.data;
 		// let tmpData = this.state.data;
-			booksArr.push(itemObj);
+		booksArr.push(itemObj);
 		this.setState({data: booksArr});
 	},
-	// updateBook: function(index, item) {
-
-	// },
+	updateTransmitter: function(index, itemObj) { 
+		this.setState({update: [index, itemObj]});
+	},
 	deleteBook: function(index) {
 		let booksArr = this.state.data,
 			// tmpData = this.state.data,
@@ -31,8 +32,8 @@ const Library = React.createClass({
 		return (
 			<div className='library'>
 				<h1>Библиотека</h1>
-				<AddForm add={this.addBook} />
-				<BookList books={this.state.data} update={this.updateBook} delete={this.deleteBook} />
+				<AddForm add={this.addBook} update={this.state.update} />
+				<BookList books={this.state.data} update={this.updateTransmitter} delete={this.deleteBook} />
 			</div>
 		);
 	}
@@ -50,11 +51,11 @@ const AddForm = React.createClass({
 	},
 	onBtnClickHandler: function(e) {
 		e.preventDefault();
-		let title = this.refs.titleField.value.trim(),
-			author = this.refs.authorField.value.trim(),
-			year = this.refs.yearField.value.trim(),
-			pages = this.refs.pagesField.value.trim(),
-			desc = this.refs.descField.value.trim();
+		let title 	= this.refs.titleField.value.trim(),
+			author 	= this.refs.authorField.value.trim(),
+			year 	= this.refs.yearField.value.trim(),
+			pages 	= this.refs.pagesField.value.trim(),
+			desc 	= this.refs.descField.value.trim();
 		
 		if(this.state.submit == ' disabled' || (!title && !author)) return;
 
@@ -68,10 +69,10 @@ const AddForm = React.createClass({
 		this.setState({submit: ' disabled'});
 
 		ReactDOM.findDOMNode(this.refs.titleField).focus();
-
 	},
 	fieldChange: function(){
-		if(this.refs.titleField.value.trim().length > 0 && this.refs.authorField.value.trim().length > 0){
+		if(this.refs.titleField.value.trim().length > 0 &&
+		this.refs.authorField.value.trim().length > 0){
 			this.refs.submit.disabled = false;
 			this.setState({submit: ''});
 		}else{
@@ -103,7 +104,7 @@ const AddForm = React.createClass({
 					<textarea className='textfield textfield--desc' defaultValue='' ref='descField' ></textarea>
 				</label>
 				<div className='button-block'>
-					<button className={'button' + this.state.submit} onClick={this.onBtnClickHandler} ref='submit'>Добавить книгу</button>
+					<button className={'button' + this.state.submit} onClick={this.onBtnClickHandler} ref='submit'>{!this.props.update ? 'Добавить книгу' : 'Редактировать'}</button>
 				</div>
 			</form>
 		);
@@ -112,9 +113,9 @@ const AddForm = React.createClass({
 
 const BookList = React.createClass({
 	render: function(){
-		let books = this.props.books,
-			update = this.props.update,
-			del = this.props.delete;
+		let books 	= this.props.books,
+			update 	= this.props.update,
+			del 	= this.props.delete;
 
 		let booksArr = books.map(function(item, index) {
 			return (
@@ -152,6 +153,9 @@ const Book = React.createClass({
 	deleteBook: function(){
 		this.props.delete(this.props.index);
 	},
+	updateBook: function(){
+		this.props.update(this.props.index, this.props.item);
+	},
 	render: function(){
 		let item = this.props.item,
 			count = this.props.count;
@@ -162,8 +166,8 @@ const Book = React.createClass({
 				{item.author} <b>"{item.title}"</b> - {item.year}г ({item.pages} стр)
 				<p className={'desc' + this.state.description}>{item.desc}</p>
 				<span className='list__buttons'>
-					<button className='button' onClick={this.readmore}>&#63;</button>
-					<button className='button button--green'>&#9998;</button>
+					<button className='button' onClick={this.readmore} >&#63;</button>
+					<button className='button button--green' onClick={this.updateBook} >&#9998;</button>
 					<button className='button button--red' onClick={this.deleteBook}>&otimes;</button>
 				</span>
 			</li>
