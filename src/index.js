@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-=======
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import './css/style.css';
 
@@ -14,9 +12,9 @@ const Library = React.createClass({
 		};
 	},
 	addBook: function(itemObj) {
-		let booksArr = this.state.data,
-			tmpData = this.state.data;
-		booksArr.push(itemObj);
+		let booksArr = this.state.data;
+		// let tmpData = this.state.data;
+			booksArr.push(itemObj);
 		this.setState({data: booksArr});
 	},
 	// updateBook: function(index, item) {
@@ -24,7 +22,7 @@ const Library = React.createClass({
 	// },
 	deleteBook: function(index) {
 		let booksArr = this.state.data,
-			tmpData = this.state.data,
+			// tmpData = this.state.data,
 			i = index;
 			booksArr.splice(i, 1);
 		this.setState({data: booksArr});
@@ -52,12 +50,13 @@ const AddForm = React.createClass({
 	},
 	onBtnClickHandler: function(e) {
 		e.preventDefault();
-		if(this.state.submit == ' disabled') return;
 		let title = this.refs.titleField.value.trim(),
 			author = this.refs.authorField.value.trim(),
 			year = this.refs.yearField.value.trim(),
 			pages = this.refs.pagesField.value.trim(),
 			desc = this.refs.descField.value.trim();
+		
+		if(this.state.submit == ' disabled' || (!title && !author)) return;
 
 		this.props.add({title: title, author: author, year: year || '---', pages: pages || '---', desc: desc || '---'});
 
@@ -79,18 +78,17 @@ const AddForm = React.createClass({
 			this.refs.submit.disabled = true;
 			this.setState({submit: ' disabled'});
 		}
-		this.state
 	},
 	render: function(){
 		return (
 			<form className='add-form'>
 				<label className='label'>
-					<span className='label__text'>Заголовок*:</span>
-					<input className='textfield textfield--title' onChange={this.fieldChange} defaultValue='' ref='titleField' />
+					<span className='label__text'>Заголовок:</span>
+					<input className='textfield textfield--title' onChange={this.fieldChange} defaultValue='' ref='titleField' placeholder='Обязательно для заполнения' />
 				</label>
 				<label className='label'>
-					<span className='label__text'>Автор*:</span>
-					<input className='textfield textfield--author' onChange={this.fieldChange} defaultValue='' ref='authorField' />
+					<span className='label__text'>Автор:</span>
+					<input className='textfield textfield--author' onChange={this.fieldChange} defaultValue='' ref='authorField' placeholder='Обязательно для заполнения' />
 				</label>
 				<label className='label'>
 					<span className='label__text'>Дата:</span>
@@ -177,4 +175,3 @@ ReactDOM.render(
 	<Library />,
 	container
 );
->>>>>>> origin/v2.0
