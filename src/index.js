@@ -13,7 +13,8 @@ const Library = React.createClass({
 		};
 	},
 	handlleSaveBook: function(itemObj, index) {
-		const booksArr = this.state.data;
+		const tmpState = this.state,
+					booksArr = tmpState.data;
 
 		if(index === undefined)
 			booksArr.push(itemObj);
@@ -24,15 +25,16 @@ const Library = React.createClass({
     this.handlleUpdate(false, false, 0);
 	},
 	handlleUpdate: function(index, itemObj, flag) { 
-    switch(flag){
-      case 0: this.setState({update: false}); break;
-      case undefined: this.setState({update: {index: index, item: itemObj}}); break;
+    if(flag === 0){
+      this.setState({update: false});
+		}else{
+			this.setState({update: {index: index, item: itemObj}});
     }
 	},
 	handlleDeleteBook: function(index) {
-		const booksArr = this.state.data,
-          i = index;
-    booksArr.splice(i, 1);
+		const	tmpState = this.state,
+					booksArr = tmpState.data;
+    booksArr.splice(index, 1);
 		this.setState({data: booksArr});
 	},
 	render: function(){
