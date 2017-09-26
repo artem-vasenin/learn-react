@@ -122,12 +122,12 @@ textarea.textfield {
 .list__item {
   display: block;
   border-bottom: 1px solid #999;
-  padding-right: 110px;
+  padding-right: 85px;
   position: relative;
 }
 
 .list__info {
-  padding: 10px 0;
+  padding: 10px 5px;
   display: inline-block;
   height: 100%;
   width: 100%;
