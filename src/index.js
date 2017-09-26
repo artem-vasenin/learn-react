@@ -12,9 +12,14 @@ const Library = React.createClass({
 			update: false
 		};
 	},
-	handlleSaveBook: function(itemObj) {
+	handlleSaveBook: function(itemObj, index) {
 		const booksArr = this.state.data;
-		booksArr.push(itemObj);
+
+		if(index === undefined)
+			booksArr.push(itemObj);
+		else
+			this.handlleUpdate(index, itemObj);
+
     this.setState({data: booksArr});
     this.handlleUpdate(false, false, 0);
 	},
@@ -42,10 +47,16 @@ const Library = React.createClass({
 });
 
 const AddForm = React.createClass({
-  componentWillUpdate(nextProps, nextState){
-    if(nextProps.update === true){
-      this.setState({update: this.props.update});
+  shouldComponentUpdate(nextProps, nextState){
+		if(nextProps.update){
+			nextState.update = nextProps.update;
+			nextState.title	 = nextProps.update.item.title;
+			nextState.author = nextProps.update.item.author;
+			nextState.year	 = nextProps.update.item.year;
+			nextState.pages	 = nextProps.update.item.pages;
+			nextState.desc	 = nextProps.update.item.desc;
     }
+		return true;
   },
 	getInitialState: function() {
 		return {
@@ -59,15 +70,8 @@ const AddForm = React.createClass({
 		};
 	},
 	handlleSaveClick: function(e) {
-    e.preventDefault();
-    if(this.props.update){
-      console.log(this.props.update.item);
-      this.setState({title: this.props.update.item.title});
-      this.setState({author: this.props.update.item.author});
-      this.setState({year: this.props.update.item.year});
-      this.setState({pages: this.props.update.item.pages});
-      this.setState({desc: this.props.update.item.desc});
-    }
+		e.preventDefault();
+		
     let title = this.state.title,
       author 	= this.state.author,
       year 	  = this.state.year,
@@ -76,8 +80,12 @@ const AddForm = React.createClass({
 		
 		if(this.state.submit === ' disabled' || (!title && !author)) return;
 
-    this.props.save({title: title, author: author, year: year || '---', pages: pages || '---', desc: desc || '---'});
+		if(this.state.update)
+			this.props.save(this.state.update.item, this.state.update.index);
+		else
+			this.props.save({title: title, author: author, year: year || '---', pages: pages || '---', desc: desc || '---'});
     
+    this.setState({update: false}),
     this.setState({title:  ''}),
     this.setState({author: ''}),
     this.setState({year:   ''}),
@@ -112,23 +120,23 @@ const AddForm = React.createClass({
 			<form className='add-form'>
 				<label className='label'>
 					<span className='label__text'>Заголовок:</span>
-					<input className='textfield textfield--title' name='title' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} value={this.state.title} ref='titleField' placeholder='Обязательно для заполнения' autoFocus />
+					<input className='textfield textfield--title' name='title' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} defaultValue={this.state.title} ref='titleField' placeholder='Обязательно для заполнения' autoFocus />
 				</label>
 				<label className='label'>
 					<span className='label__text'>Автор:</span>
-					<input className='textfield textfield--author' name='author' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} value={this.state.author} ref='authorField' placeholder='Обязательно для заполнения' />
+					<input className='textfield textfield--author' name='author' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} defaultValue={this.state.author} ref='authorField' placeholder='Обязательно для заполнения' />
 				</label>
 				<label className='label'>
 					<span className='label__text'>Дата:</span>
-					<input className='textfield textfield--year' name='year' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} value={this.state.year} ref='yearField' />
+					<input className='textfield textfield--year' name='year' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} defaultValue={this.state.year} ref='yearField' />
 				</label>
 				<label className='label'>
 					<span className='label__text'>Страниц:</span>
-					<input className='textfield textfield--pages' name='pages' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} value={this.state.pages} ref='pagesField' />
+					<input className='textfield textfield--pages' name='pages' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} defaultValue={this.state.pages} ref='pagesField' />
 				</label>
 				<label className='label'>
 					<span className='label__text'>Подробнее:</span>
-					<textarea className='textfield textfield--desc' name='desc' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} value={this.state.desc} ref='descField' ></textarea>
+					<textarea className='textfield textfield--desc' name='desc' onBlur={this.handlleFieldBlur} onChange={this.handlleFieldChange} defaultValue={this.state.desc} ref='descField' ></textarea>
 				</label>
 				<div className='button-block'>
 					<button className={'button' + this.state.submit} onClick={this.handlleSaveClick} ref='submit'>{!this.props.update ? 'Добавить книгу' : 'Редактировать'}</button>
