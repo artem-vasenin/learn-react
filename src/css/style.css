@@ -110,7 +110,7 @@ textarea.textfield {
   background: #cecece;
   padding: 15px;
   box-shadow: 0 3px 5px #8a8a8a;
-
+  
 }
 
 .list {
@@ -121,10 +121,21 @@ textarea.textfield {
 
 .list__item {
   display: block;
-  padding: 10px 0;
   border-bottom: 1px solid #999;
   padding-right: 110px;
   position: relative;
+}
+
+.list__info {
+  padding: 10px 0;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}
+
+.list__info:hover {
+  background: #aaa;
+  cursor: pointer;
 }
 
 .list__index {

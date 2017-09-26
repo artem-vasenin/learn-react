@@ -215,11 +215,12 @@ const Book = React.createClass({
 
 		return (
 			<li className='list__item'>
+				<span className='list__info' onClick={this.handlleReadmore}>
 				<i className='list__index'>{count + 1}</i>
 				{item.author} <b>"{item.title}"</b> - {item.year || '---'}г ({item.pages || '---'} стр)
+				</span>
 				<p className={'desc' + this.state.description}>{item.desc || 'Описание отсутствует'}</p>
 				<span className='list__buttons'>
-					<button className='button' onClick={this.handlleReadmore} >&#63;</button>
 					<button className='button button--green' onClick={this.handlleUpdate} >&#9998;</button>
 					<button className='button button--red' onClick={this.handlleDelete}>&otimes;</button>
 				</span>
