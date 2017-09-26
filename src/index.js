@@ -13,29 +13,29 @@ const Library = React.createClass({
 		};
 	},
 	handlleSaveBook: function (itemObj, index) {
-		const tmpState = JSON.parse(JSON.stringify(this.state)),
-			booksArr = tmpState.data;
+		const tmpState = Object.assign({}, this.state);
 
 		if (index === undefined)
-			booksArr.push(itemObj);
+			tmpState.data.push(itemObj);
 		else
 			this.handlleUpdate(index, itemObj);
 
-		this.setState({ data: booksArr });
+		this.setState(tmpState);
 		this.handlleUpdate(false, false, 0);
 	},
 	handlleUpdate: function (index, itemObj, flag) {
+		let tmpState = Object.assign({}, this.state);
 		if (flag === 0) {
-			this.setState({ update: false });
+			tmpState.update = false;
 		} else {
-			this.setState({ update: { index: index, item: itemObj } });
+			tmpState.update = { index: index, item: itemObj };
 		}
+		this.setState(tmpState);
 	},
 	handlleDeleteBook: function (index) {
-		const tmpState = JSON.parse(JSON.stringify(this.state)),
-			booksArr = tmpState.data;
-		booksArr.splice(index, 1);
-		this.setState({ data: booksArr });
+		const tmpState = Object.assign({}, this.state);
+		tmpState.data.splice(index, 1);
+		this.setState(tmpState);
 	},
 	render: function () {
 		return (
@@ -78,7 +78,8 @@ const AddForm = React.createClass({
 			author = this.state.author,
 			year = this.state.year,
 			pages = this.state.pages,
-			desc = this.state.desc;
+			desc = this.state.descб,
+			tmpState = Object.assign({}, this.state);
 
 		if (this.state.submit === ' disabled' || (!title && !author)) return;
 
@@ -87,35 +88,43 @@ const AddForm = React.createClass({
 		else
 			this.props.save({ title: title, author: author, year: year || '---', pages: pages || '---', desc: desc || '---' });
 
-		this.setState({ update: false }),
-			this.setState({ title: '' }),
-			this.setState({ author: '' }),
-			this.setState({ year: '' }),
-			this.setState({ pages: '' }),
-			this.setState({ desc: '' });
-		this.setState({ submit: ' disabled' });
+		tmpState.update = false,
+		tmpState.title = '',
+		tmpState.author = '',
+		tmpState.year = '',
+		tmpState.pages = '',
+		tmpState.desc = '',
+		tmpState.submit = ' disabled';
+		this.setState(tmpState);
 	},
 	handlleFieldChange: function (e) {
 		const value = e.target.value.trim(),
 			name = e.target.name;
+		let tmpState = Object.assign({}, this.state);
 
 		switch (name) {
-			case 'title': this.setState({ title: value }); break;
-			case 'author': this.setState({ author: value }); break;
-			case 'year': this.setState({ year: value }); break;
-			case 'pages': this.setState({ pages: value }); break;
-			case 'desc': this.setState({ desc: value }); break;
+			case 'title': tmpState.title = value; break;
+			case 'author': tmpState.author = value; break;
+			case 'year': tmpState.year = value; break;
+			case 'pages': tmpState.pages = value; break;
+			case 'desc': tmpState.desc = value; break;
 		}
+
+		this.setState(tmpState);
 	},
 	handlleFieldBlur: function () {
+		let tmpState = Object.assign({}, this.state);
+
 		if (this.state.title.trim() && this.state.author.trim()) {
 			this.refs.submit.disabled = false;
-			this.setState({ submit: '' });
+			tmpState.submit = '';
 		}
 		else {
 			this.refs.submit.disabled = true;
-			this.setState({ submit: ' disabled' });
+			tmpState.submit =  ' disabled';
 		}
+
+		this.setState(tmpState);
 	},
 	render: function () {
 		return (
@@ -183,17 +192,26 @@ const Book = React.createClass({
 	},
 	handlleReadmore: function (e) {
 		e.preventDefault();
+
+		let tmpState = Object.assign({}, this.state);
+
 		if (this.state.description)
-			this.setState({ description: '' });
+			tmpState.description = '';
 		else
-			this.setState({ description: ' hide' });
+			tmpState.description = ' hide';
+
+			this.setState(tmpState);
 	},
 	handlleDelete: function () {
 		this.props.delete(this.props.index);
 	},
 	handlleUpdate: function () {
+		let tmpState = Object.assign({}, this.state);
+
 		this.props.update(this.props.index, this.props.item);
-		this.setState({ update: true });
+		tmpState.update = true;
+
+		this.setState(tmpState);
 	},
 	render: function () {
 		const item = this.props.item,
