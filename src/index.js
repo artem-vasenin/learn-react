@@ -15,7 +15,7 @@ const Library = React.createClass({
 	handleSaveBook: function (itemObj, index) {
 		const tmpState = Object.assign({}, this.state);
 		
-		if (index === undefined){
+		if (index === undefined){ //todo !index
 			tmpState.data.push(itemObj);
 		} else {
 			this.handleUpdate(index, itemObj);
@@ -36,20 +36,21 @@ const Library = React.createClass({
 		this.setState(tmpState);
 	},
 	handleDeleteBook: function (index) {
-		const tmpState = Object.assign({}, this.state);
-		tmpState.data.splice(index, 1);
-		this.setState(tmpState);
+		const tmpDataState = this.state.data.slice();
+		tmpDataState.splice(index, 1);
+		this.setState({data: tmpDataState});
 	},
 	render: function () {
+		const {data, update} = this.state;
 		return (
 			<div className='library'>
 				<h1>Библиотека</h1>
 				<AddForm 
 					save={this.handleSaveBook} 
-					update={this.state.update} 
+					update={update} 
 				/>
 				<BookList 
-					books={this.state.data} 
+					books={data} 
 					update={this.handleUpdate} 
 					delete={this.handleDeleteBook} 
 				/>
