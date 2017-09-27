@@ -118,7 +118,7 @@ const AddForm = React.createClass({
 		});
 	},
 	handlleFieldChange: function (e) {
-		const value = e.target.value.trim(),
+		const value = e.target.value,
 			name = e.target.name;
 
 		switch (name) {
