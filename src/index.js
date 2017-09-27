@@ -66,7 +66,7 @@ const AddForm = React.createClass({
 
 			this.setState({
 				...this.stzte,
-				update: update,
+				update,
 				title: item.title,
 				author: item.author,
 				year: item.year,
@@ -97,7 +97,9 @@ const AddForm = React.createClass({
 			desc: this.state.desc
 		};
 
-		if (this.state.submit === ' disabled' || (!item.title && !item.author)) return;
+		if (this.state.submit === ' disabled' || (!item.title && !item.author)) {
+			return;
+		}
 
 		if (this.state.update){
 			this.props.save(item, this.state.update.index);
