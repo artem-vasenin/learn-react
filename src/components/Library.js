@@ -1,4 +1,7 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {addBook, updateBook, deleteBook, updateSuccess, sendToForm} from '../actions';
+
 
 const Library = React.createClass({
 	getInitialState: () => {
@@ -54,7 +57,7 @@ const Library = React.createClass({
 	}
 });
 
-const AddForm = React.createClass({
+let AddForm = React.createClass({
 	componentWillReceiveProps(nextProps) {
 		if(nextProps.update){
 			const {update} = nextProps,
@@ -201,6 +204,24 @@ const AddForm = React.createClass({
 	}
 });
 
+
+
+const formMapStateToProps = state => {
+	return state.data;
+}
+const formMapdispatchtoprops = dispatch => {
+	return {
+		deleteBook: (index) => {
+			dispatch(addBook(index));
+		},
+		updateBook: (index) => {
+			dispatch(updateBook(index));
+		}
+	}
+}
+
+AddForm = connect(formMapStateToProps, formMapdispatchtoprops)(AddForm);
+
 const BookList = React.createClass({
 	render: function () {
 		const books = this.props.books,
@@ -214,8 +235,6 @@ const BookList = React.createClass({
 					count={index}
 					key={index}
 					index={index}
-					update={update}
-					delete={del}
 				/>
 			);
 		});
@@ -234,7 +253,7 @@ const BookList = React.createClass({
 	}
 });
 
-const Book = React.createClass({
+let Book = React.createClass({
 	getInitialState: function () {
 		return {
 			description: ' hide',
@@ -244,17 +263,17 @@ const Book = React.createClass({
 	handleReadmore: function (e) {
 		e.preventDefault();
 
-		if (this.state.description)
+		if (this.state.description) {
 			this.setState({description: ''});
-		else
+		} else {
 			this.setState({description: ' hide'});
+		}		
 	},
 	handleDelete: function () {
-		this.props.delete(this.props.index);
+		this.props.deleteBook(this.props.index);
 	},
 	handleUpdate: function () {
-		this.props.update(this.props.index, this.props.item);
-		this.setState({update: true});
+		this.props.updateBook(this.props.index);
 	},
 	render: function () {
 		const item = this.props.item,
@@ -278,5 +297,21 @@ const Book = React.createClass({
 		);
 	}
 });
+
+const bookMapStateToProps = state => {
+	return state.data;
+}
+const bookMapdispatchtoprops = dispatch => {
+	return {
+		deleteBook: (index) => {
+			dispatch(deleteBook(index));
+		},
+		updateBook: (index) => {
+			dispatch(sendToForm(index));
+		}
+	}
+}
+
+Book = connect(bookMapStateToProps, bookMapdispatchtoprops)(Book);
 
 export default Library;

@@ -1,19 +1,36 @@
-// типы действий
+import actionTypes from '../constants';
 
-export const ADD_BOOK = 'ADD_BOOK';
-export const DELETE_BOOK = 'DELETE_BOOK';
-export const UPDATE_BOOK = 'UPDATE_BOOK';
-
-// генераторы действий
-
-export function addBook(bookInfo){
-    return {type: ADD_BOOK, bookInfo};
+export function addBook(itemObj, index) {
+    return {
+        type: actionTypes.ADD_BOOK,
+        data: {index: index, itemObj: itemObj}
+    };
 }
 
-export function deleteBook(bookIndex){
-    return {type: DELETE_BOOK, bookIndex};
+export function sendToForm(itemObj, index) {
+    return {
+        type: actionTypes.SEND_TO_DORM, 
+        data: {index: index, itemObj: itemObj}
+    };
 }
 
-export function updateBook(bookObject){
-    return {type: ADD_BOOK, bookObject};
+export function updateBook(itemObj, index) {
+    return {
+        type: actionTypes.UPDATE_BOOK, 
+        data: {index: index, itemObj: itemObj}
+    };
+}
+
+export function deleteBook(index) {
+    return {
+        type: actionTypes.DELETE_BOOK, 
+        index: index
+    };
+}
+
+export function updateSuccess() {
+    return {
+        type: actionTypes.UPDATE_SUCCESS, 
+        update: false
+    };
 }

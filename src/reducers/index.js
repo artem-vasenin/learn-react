@@ -1,27 +1,30 @@
-import Redux from 'redux';
-import {addBook, deleteBook, updateBook} from '../actions'
+import actionTypes from '../constants';
 
 const initialState = {
     data: [],
     update: false
 };
 
-function addBookReducer(state = initialState, action){
-    switch(action.type){
-        case ADD_BOOK: return Object.assign({}, state, {
-            data: [
-                ...state.data,
-                {
-                    title: action.book.title,
-                    author: action.book.author,
-                    year: action.book.year,
-                    pages: action.book.pages,
-                    desc: action.book.desc
-                }
-            ]
-        });
-        default: return state;
+export default function reducer(state = initialState, action) {
+    let newState = Object.assign({}, state);
+    switch (action.type) {
+        case actionTypes.ADD_BOOK: 
+            newState.data.push(action.itemObj);
+            break;
+        case actionTypes.UPDATE_BOOK:
+            newState.update = { index: action.index, item: action.itemObj };
+            newState.data.splice(action.index, 1, action.itemObj);
+            break;
+        case actionTypes.SEND_TO_FORM:
+            // newState.data.splice(action.index, 1);
+            break;
+        case actionTypes.DELETE_BOOK:
+            newState.data.splice(action.index, 1);
+            break;
+        case actionTypes.UPDATE_SUCCESS:
+            newState.update = action.update;
+            break;
+        default: return state;        
     }
+    return newState;
 }
-
-//https://rajdee.gitbooks.io/redux-in-russian/content/docs/basics/Reducers.html
