@@ -2,27 +2,24 @@ import actionTypes from '../constants';
 
 const initialState = {
     data: [],
-    update: false
+    currentBook: {}
 };
 
 export default function reducer(state = initialState, action) {
     let newState = Object.assign({}, state);
     switch (action.type) {
         case actionTypes.ADD_BOOK: 
-            newState.data.push(action.itemObj);
+            newState.data.push(action.book);
             break;
         case actionTypes.UPDATE_BOOK:
-            newState.update = { index: action.index, item: action.itemObj };
-            newState.data.splice(action.index, 1, action.itemObj);
+            newState.currentBook = action.book;
+            newState.data.splice(action.book.index, 1, action.book);
             break;
-        case actionTypes.SEND_TO_FORM:
+        case actionTypes.EDIT_BOOK:
             // newState.data.splice(action.index, 1);
             break;
         case actionTypes.DELETE_BOOK:
             newState.data.splice(action.index, 1);
-            break;
-        case actionTypes.UPDATE_SUCCESS:
-            newState.update = action.update;
             break;
         default: return state;        
     }
