@@ -8,7 +8,7 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     let newState = Object.assign({}, state);
     switch (action.type) {
-        case actionTypes.ADD_BOOK: 
+        case actionTypes.ADD_BOOK:
             newState.data.push(action.book);
             break;
         case actionTypes.UPDATE_BOOK:
@@ -21,7 +21,7 @@ export default function reducer(state = initialState, action) {
         case actionTypes.DELETE_BOOK:
             newState.data.splice(action.index, 1);
             break;
-        default: return state;        
+        default: return state;
     }
     return newState;
 }

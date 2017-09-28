@@ -85,22 +85,22 @@ let AddForm = React.createClass({
 			<form className='add-form'>
 				<label className='label'>
 					<span className='label__text'>Заголовок:</span>
-					<input 
-						className='textfield textfield--title' 
-						name='title' 
-						onBlur={this.handleFieldBlur} 
+					<input
+						className='textfield textfield--title'
+						name='title'
+						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
 						value={this.state.title}
-						placeholder='Обязательно для заполнения' 
+						placeholder='Обязательно для заполнения'
 						autoFocus
 					/>
 				</label>
 				<label className='label'>
 					<span className='label__text'>Автор:</span>
-					<input 
-						className='textfield textfield--author' 
-						name='author' 
-						onBlur={this.handleFieldBlur} 
+					<input
+						className='textfield textfield--author'
+						name='author'
+						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
 						value={this.state.author}
 						placeholder='Обязательно для заполнения'
@@ -108,37 +108,37 @@ let AddForm = React.createClass({
 				</label>
 				<label className='label'>
 					<span className='label__text'>Дата:</span>
-					<input 
-						className='textfield textfield--year' 
-						name='year' 
-						onBlur={this.handleFieldBlur} 
+					<input
+						className='textfield textfield--year'
+						name='year'
+						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
 						value={this.state.year}
 					/>
 				</label>
 				<label className='label'>
 					<span className='label__text'>Страниц:</span>
-					<input 
-						className='textfield textfield--pages' 
-						name='pages' 
-						onBlur={this.handleFieldBlur} 
+					<input
+						className='textfield textfield--pages'
+						name='pages'
+						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
-						value={this.state.pages} 
+						value={this.state.pages}
 					/>
 				</label>
 				<label className='label'>
 					<span className='label__text'>Подробнее:</span>
-					<textarea 
-						className='textfield textfield--desc' 
-						name='desc' 
-						onBlur={this.handleFieldBlur} 
+					<textarea
+						className='textfield textfield--desc'
+						name='desc'
+						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
 						value={this.state.desc}
 					></textarea>
 				</label>
 				<div className='button-block'>
-					<button 
-						className={'button' + this.state.submit} 
+					<button
+						className={'button' + this.state.submit}
 						onClick={this.handleSaveClick}
 					>
 						{!this.props.update ? 'Добавить книгу' : 'Редактировать'}

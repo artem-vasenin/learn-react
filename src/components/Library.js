@@ -6,7 +6,7 @@ import AddForm from './AddForm';
 const Library = React.createClass({
 	handleSaveBook: function (itemObj, index) {
 		const tmpState = Object.assign({}, this.state);
-		
+
 		if (index === undefined){ //todo !index
 			tmpState.data.push(itemObj);
 		} else {
@@ -16,9 +16,9 @@ const Library = React.createClass({
 		this.setState({data: tmpState});
 		this.handleUpdate(false, false, true);
 	},
-	handleUpdate: function (index, itemObj, clearUpdateState) {		
+	handleUpdate: function (index, itemObj, clearUpdateState) {
 		let tmpState = Object.assign({}, this.state);
-				
+
 		if (clearUpdateState) {
 			tmpState.update = false;
 		} else {
