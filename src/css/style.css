@@ -1,0 +1,135 @@
+body {
+  background: #fff;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+h1, h2 {
+  font-weight: 100;
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: 1px 1px 1px #afafaf;
+}
+.hide {
+  display: none;
+}
+.text-red {
+  color: red;
+}
+.library {
+  max-width: 800px;
+  min-width: 300px;
+  margin: 50px auto;
+}
+
+/* ----- add-form ----- */
+.add-form {
+  background: #cecece;
+  padding: 15px;
+  box-shadow: 0 3px 5px #8a8a8a;
+  margin-bottom: 50px;
+}
+.add-form .button {
+  font-size: inherit;
+}
+.label {
+  display: block;
+  border-bottom: 1px solid #999;
+  padding: 10px 0;
+}
+.label__text {
+  display: inline-block;
+  min-width: 160px;
+}
+.textfield {
+  width: calc(100% - 185px);
+  border: none;
+  padding: 1px 10px;
+}
+.button-block {
+  text-align: center;
+  padding: 10px 0 0;
+}
+.button {
+  display: inline-block;
+  background: #507299;
+  border: 1px solid transparent;
+  color: white;
+  text-transform: uppercase;
+  padding: 5px;
+  cursor: pointer;
+  box-shadow: 0 3px 5px #888;
+  margin-left: 5px;
+  font-size: 18px;
+  line-height: 18px;
+  min-width: 20px;
+  outline: none;
+}
+.button.disabled {
+  cursor: default;
+  background: none;
+  border-color: black;
+  color: black;
+  box-shadow: 0 1px 1px #555; 
+}
+.button--red {
+  background: red;
+}
+.button--green {
+  background: green;
+}
+.button:hover {
+  box-shadow: 0 1px 1px #555;
+}
+
+/* -------- book-list -------- */
+.book-list__table {
+  background: #cecece;
+  padding: 15px;
+  box-shadow: 0 3px 5px #8a8a8a;
+  
+}
+.list {
+  margin: 0;
+  padding: 0;
+}
+.list__item {
+  display: block;
+  border-bottom: 1px solid #999;
+  padding-right: 85px;
+  position: relative;
+}
+.list__info {
+  padding: 10px 5px;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}
+.list__info:hover {
+  background: #aaa;
+  cursor: pointer;
+}
+.list__index {
+  display: inline-block;
+  padding: 0 5px;
+  font-style: normal;
+  margin-right: 10px;
+  background: green;
+  color: white;
+  font-weight: 900;
+}
+.list__buttons {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  text-align: right;
+}
+.desc {
+  padding-left: 30px;
+}
+.readmore {
+  color: inherit;
+}
+.readmore:hover {
+  color: blue;
+}
