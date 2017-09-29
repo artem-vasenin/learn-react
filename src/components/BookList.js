@@ -4,35 +4,26 @@ import {deleteBook, editBook} from '../actions';
 import Book from './Book';
 
 let BookList = React.createClass({
-	// componentWillReceiveProps: function(nextProps){
-	// 	this.setState({data: this.props.data});
-	// },
-	// getInitialState: function() {
-	// 	return {
-	// 		data: [],
-	// 		currentBook: {}
-	// 	};
-	// },
-    deleteBook: function () {
-		this.props.deleteBook(this.props.data.index);
+    deleteBook: function (index) {
+		this.props.deleteBook(index);
 	},
-	editBook: function () {
-		this.props.editeBook(this.props.data.index);
+	editBook: function (itemObj) {
+		this.props.editBook(itemObj);
 	},
 	render: function () {
-		console.log(this.props);
 		let booksArr = this.props.data.map(function (item, index) {
+			item.index = index;
 			return (
 				<Book
 					item={item}
 					count={index}
 					key={index}
 					index={index}
-                    editBook={editBook}
-                    deleteBook={deleteBook}
+                    editBook={this.editBook}
+                    deleteBook={this.deleteBook}
 				/>
 			);
-		});
+		}, this);
 
 		return (
 			<div className='book-list'>
@@ -48,20 +39,20 @@ let BookList = React.createClass({
 	}
 });
 
-const bookMapStateToProps = state => {
+const mapStateToProps = state => {
 	return {
         data: state.data
     };
 }
-const bookMapdispatchtoprops = dispatch => {
+const mapdispatchtoprops = dispatch => {
 	return {
 		deleteBook: (index) => {
 			dispatch(deleteBook(index));
 		},
-		updateBook: (index) => {
-			dispatch(editBook(index));
+		editBook: (itemObj) => {
+			dispatch(editBook(itemObj));
 		}
 	};
 }
 
-export default connect(bookMapStateToProps, bookMapdispatchtoprops)(BookList);
+export default connect(mapStateToProps, mapdispatchtoprops)(BookList);

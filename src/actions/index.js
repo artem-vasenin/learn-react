@@ -10,14 +10,14 @@ export function addBook(itemObj) {
 export function updateBook(itemObj) {
     return {
         type: actionTypes.UPDATE_BOOK, 
-        data: itemObj
+        book: itemObj
     };
 }
 
-export function editBook(index) {
+export function editBook(itemObj) {
     return {
         type: actionTypes.EDIT_BOOK, 
-        data: index
+        book: itemObj
     };
 }
 

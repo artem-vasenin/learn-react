@@ -19,8 +19,8 @@ const Book = React.createClass({
 	handleDelete: function () {
 		this.props.deleteBook(this.props.index);
 	},
-	handleUpdate: function () {
-		this.props.editBook(this.props.index);
+	handleEdit: function () {
+		this.props.editBook(this.props.item);
 	},
 	render: function () {
 		const item = this.props.item,
@@ -37,7 +37,7 @@ const Book = React.createClass({
 				</span>
 				<p className={'desc' + this.state.description}>{item.desc || 'Описание отсутствует'}</p>
 				<span className='list__buttons'>
-					<button className='button button--green' onClick={this.handleUpdate} >&#9998;</button>
+					<button className='button button--green' onClick={this.handleEdit} >&#9998;</button>
 					<button className='button button--red' onClick={this.handleDelete}>&otimes;</button>
 				</span>
 			</li>

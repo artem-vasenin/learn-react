@@ -149,7 +149,7 @@ let AddForm = React.createClass({
 	}
 });
 
-const formMapStateToProps = state => {
+const mapStateToProps = state => {
 	return {
         currentBook: state.currentBook
     };
@@ -165,6 +165,6 @@ const formMapdispatchtoprops = dispatch => {
 	};
 }
 
-AddForm = connect(formMapStateToProps, formMapdispatchtoprops)(AddForm);
+AddForm = connect(mapStateToProps, formMapdispatchtoprops)(AddForm);
 
 export default AddForm;
