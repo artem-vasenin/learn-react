@@ -3,83 +3,64 @@ import {connect} from 'react-redux';
 import {addBook, updateBook} from '../actions';
 
 let AddForm = React.createClass({
-	componentWillReceiveProps(nextProps) {
-		if(nextProps.currentBook.index){
-			const {currentBook} = nextProps,
-				{item} = currentBook;
-
-			this.setState({
-				...this.state,
-                index: item.index,
-				title: item.title,
-				author: item.author,
-				year: item.year,
-				pages: item.pages,
-				desc: item.desc
-			});
-		}
+	componentWillReceiveProps: function(newProps){
+		this.setState({currentBook: newProps.currentBook});
 	},
 	getInitialState: function () {
 		return {
 			submit: ' disabled',
-			currentBook: this.props.currentBook,
-			title: '',
-			author: '',
-			year: '',
-			pages: '',
-			desc: ''
+			currentBook: {}
 		};
 	},
 	handleSaveClick: function (e) {
 		e.preventDefault();
 
-		let item = {
-			title: this.state.title,
-			author: this.state.author,
-			year: this.state.year,
-			pages: this.state.pages,
-			desc: this.state.desc
+		let currentBook = {
+			title: this.state.currentBook.title,
+			author: this.state.currentBook.author,
+			year: this.state.currentBook.year,
+			pages: this.state.currentBook.pages,
+			desc: this.state.currentBook.desc
 		};
 
-		if (this.state.submit === ' disabled' || (!item.title && !item.author)) {
+		if (this.state.submit === ' disabled' || (!currentBook.title && !currentBook.author)) {
 			return;
 		}
 
-		if (this.state.currentBook.index){
-			this.props.updateBook(item);
+		if (this.props.currentBook.index !== undefined){
+			currentBook.index = this.props.currentBook.index;
+			this.props.updateBook(currentBook);
 		} else {
-			this.props.addBook(item);
+			this.props.addBook(currentBook);
 		}
 
 		this.setState({
-			currentBook: {},
-			title: '',
-			author: '',
-			year: '',
-			pages: '',
-			desc: '',
-			submit: ' disabled'
+			submit: ' disabled',
+			currentBook: {}
 		});
 	},
 	handleFieldChange: function (e) {
 		const value = e.target.value,
 			name = e.target.name;
 
+		let newBook = {...this.state.currentBook};
+
 		switch (name) {
-			case 'title': this.setState({title: value}); break;
-			case 'author': this.setState({author: value}); break;
-			case 'year': this.setState({year: value}); break;
-			case 'pages': this.setState({pages: value}); break;
-			case 'desc': this.setState({desc: value}); break;
+			case 'title': newBook.title = value; break;
+			case 'author': newBook.author = value; break;
+			case 'year': newBook.year = value; break;
+			case 'pages': newBook.pages = value; break;
+			case 'desc': newBook.desc = value; break;
 		}
-	},
-	handleFieldBlur: function () {
-		if (this.state.title.trim() && this.state.author.trim()) {
-			this.setState({submit: ''});
+
+		if (this.state.currentBook.title && this.state.currentBook.author) {
+			this.setState({submit: '', currentBook: newBook});
 		} else {
-			this.setState({submit:  ' disabled'});
+			this.setState({submit:  ' disabled', currentBook: newBook});
 		}
 	},
+	// handleFieldBlur: function () {
+	// },
 	render: function () {
 		return (
 			<form className='add-form'>
@@ -90,7 +71,7 @@ let AddForm = React.createClass({
 						name='title'
 						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
-						value={this.state.title}
+						value={this.state.currentBook.title !== undefined ? this.state.currentBook.title : ''}
 						placeholder='Обязательно для заполнения'
 						autoFocus
 					/>
@@ -102,7 +83,7 @@ let AddForm = React.createClass({
 						name='author'
 						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
-						value={this.state.author}
+						value={this.state.currentBook.author !== undefined ? this.state.currentBook.author : ''}
 						placeholder='Обязательно для заполнения'
 					/>
 				</label>
@@ -113,7 +94,7 @@ let AddForm = React.createClass({
 						name='year'
 						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
-						value={this.state.year}
+						value={this.state.currentBook.year !== undefined ? this.state.currentBook.year : ''}
 					/>
 				</label>
 				<label className='label'>
@@ -123,7 +104,7 @@ let AddForm = React.createClass({
 						name='pages'
 						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
-						value={this.state.pages}
+						value={this.state.currentBook.pages !== undefined ? this.state.currentBook.pages : ''}
 					/>
 				</label>
 				<label className='label'>
@@ -133,15 +114,16 @@ let AddForm = React.createClass({
 						name='desc'
 						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
-						value={this.state.desc}
+						value={this.state.currentBook.desc !== undefined ? this.state.currentBook.desc : ''}
 					></textarea>
 				</label>
 				<div className='button-block'>
 					<button
 						className={'button' + this.state.submit}
 						onClick={this.handleSaveClick}
+						disabled={this.state.submit}
 					>
-						{!this.props.update ? 'Добавить книгу' : 'Редактировать'}
+						{this.props.currentBook.index === undefined ? 'Добавить книгу' : 'Редактировать'}
 					</button>
 				</div>
 			</form>
@@ -154,17 +136,17 @@ const mapStateToProps = state => {
         currentBook: state.currentBook
     };
 }
-const formMapdispatchtoprops = dispatch => {
+const mapDispatchToProps = dispatch => {
 	return {
-		addBook: (index, itemObject) => {
-			dispatch(addBook(index, itemObject));
+		addBook: (itemObject) => {
+			dispatch(addBook(itemObject));
 		},
-		updateBook: (index, itemObject) => {
-			dispatch(updateBook(index, itemObject));
+		updateBook: (itemObject) => {
+			dispatch(updateBook(itemObject));
 		}
 	};
 }
 
-AddForm = connect(mapStateToProps, formMapdispatchtoprops)(AddForm);
+AddForm = connect(mapStateToProps, mapDispatchToProps)(AddForm);
 
 export default AddForm;

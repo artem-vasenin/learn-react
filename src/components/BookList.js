@@ -4,6 +4,14 @@ import {deleteBook, editBook} from '../actions';
 import Book from './Book';
 
 let BookList = React.createClass({
+	componentWillReceiveProps: function(newProps) {
+		this.setState({data: newProps.data});
+	},
+	getInitialState: function() {
+		return {
+			data: []
+		}
+	},
     deleteBook: function (index) {
 		this.props.deleteBook(index);
 	},
@@ -11,7 +19,7 @@ let BookList = React.createClass({
 		this.props.editBook(itemObj);
 	},
 	render: function () {
-		let booksArr = this.props.data.map(function (item, index) {
+		let booksArr = this.state.data.map(function (item, index) {
 			item.index = index;
 			return (
 				<Book
@@ -32,7 +40,7 @@ let BookList = React.createClass({
 					<ol className='list'>
 						{booksArr}
 					</ol>
-					<p><strong>{(this.props.data.length && ('Книг в библиотеке: ' + this.props.data.length)) || 'Библиотека пуста'}</strong></p>
+					<p><strong>{(this.state.data.length && ('Книг в библиотеке: ' + this.state.data.length)) || 'Библиотека пуста'}</strong></p>
 				</div>
 			</div>
 		);

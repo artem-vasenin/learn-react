@@ -3,21 +3,21 @@ import actionTypes from '../constants';
 export function addBook(itemObj) {
     return {
         type: actionTypes.ADD_BOOK,
-        book: itemObj
+        currentBook: itemObj
     };
 }
 
 export function updateBook(itemObj) {
     return {
         type: actionTypes.UPDATE_BOOK, 
-        book: itemObj
+        currentBook: itemObj
     };
 }
 
 export function editBook(itemObj) {
     return {
         type: actionTypes.EDIT_BOOK, 
-        book: itemObj
+        currentBook: itemObj
     };
 }
 

@@ -11,15 +11,16 @@ export default function reducer(state = initialState, action) {
         newCurrentBook = Object.assign([], state.currentBook);
     switch (action.type) {
         case actionTypes.ADD_BOOK:
-            newData.push(action.book);
+            newData.push(action.currentBook);
             newState.data = newData;
             break;
         case actionTypes.UPDATE_BOOK:
-            newState.currentBook = action.book;
-            newState.data.splice(action.book.index, 1, action.book);
+            newData.splice(action.currentBook.index, 1, action.currentBook);
+            newState.currentBook = {};
+            newState.data = newData;
             break;
         case actionTypes.EDIT_BOOK:
-            newCurrentBook = action.book;
+            newCurrentBook = action.currentBook;
             newState.currentBook = newCurrentBook;
             break;
         case actionTypes.DELETE_BOOK:
