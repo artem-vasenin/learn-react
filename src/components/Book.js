@@ -1,28 +1,29 @@
 import React from 'react';
 
-const Book = React.createClass({
-	getInitialState: function () {
-		return {
+export default class Book extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
 			description: ' hide',
 			update: false
-		};
-	},
-	handleReadmore: function (e) {
+		}
+	}
+	handleReadmore = (e) => {
 		e.preventDefault();
 
 		if (this.state.description) {
 			this.setState({description: ''});
 		} else {
 			this.setState({description: ' hide'});
-		}		
-	},
-	handleDelete: function () {
+		}
+	}
+	handleDelete = () => {
 		this.props.deleteBook(this.props.index);
-	},
-	handleEdit: function () {
+	}
+	handleEdit = () => {
 		this.props.editBook(this.props.item);
-	},
-	render: function () {
+	}
+	render () {
 		const item = this.props.item,
 			count = this.props.count;
 
@@ -30,9 +31,9 @@ const Book = React.createClass({
 			<li className='list__item'>
 				<span className='list__info' onClick={this.handleReadmore}>
 					<i className='list__index'>{count + 1}</i>
-					{item.author} 
-					<b>"{item.title}"</b> - 
-					{item.year || '---'}г 
+					{item.author}
+					<b>"{item.title}"</b> -
+					{item.year || '---'}г
 					({item.pages || '---'} стр)
 				</span>
 				<p className={'desc' + this.state.description}>{item.desc || 'Описание отсутствует'}</p>
@@ -43,6 +44,4 @@ const Book = React.createClass({
 			</li>
 		);
 	}
-});
-
-export default Book;
+}

@@ -2,8 +2,8 @@ import React from 'react';
 import BookList from './BookList';
 import AddForm from './AddForm';
 
-const Library = React.createClass({
-	render: function () {
+class Library extends React.Component{
+	render() {
 		return (
 			<div className='library'>
 				<h1>Библиотека</h1>
@@ -12,6 +12,6 @@ const Library = React.createClass({
 			</div>
 		);
 	}
-});
+}
 
 export default Library;

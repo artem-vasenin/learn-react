@@ -2,17 +2,18 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {addBook, updateBook} from '../actions';
 
-let AddForm = React.createClass({
-	componentWillReceiveProps: function(newProps){
-		this.setState({currentBook: newProps.currentBook});
-	},
-	getInitialState: function () {
-		return {
+class AddForm extends React.Component{
+	constructor (props) {
+		super(props);
+		this.state = {
 			submit: ' disabled',
 			currentBook: {}
 		};
-	},
-	handleSaveClick: function (e) {
+	}
+	componentWillReceiveProps(newProps) {
+		this.setState({currentBook: newProps.currentBook});
+	}
+	handleSaveClick = (e) => {
 		e.preventDefault();
 
 		let currentBook = {
@@ -38,8 +39,8 @@ let AddForm = React.createClass({
 			submit: ' disabled',
 			currentBook: {}
 		});
-	},
-	handleFieldChange: function (e) {
+	}
+	handleFieldChange =  (e) => {
 		const value = e.target.value,
 			name = e.target.name;
 
@@ -58,10 +59,8 @@ let AddForm = React.createClass({
 		} else {
 			this.setState({submit:  ' disabled', currentBook: newBook});
 		}
-	},
-	// handleFieldBlur: function () {
-	// },
-	render: function () {
+	}
+	render() {
 		return (
 			<form className='add-form'>
 				<label className='label'>
@@ -129,7 +128,7 @@ let AddForm = React.createClass({
 			</form>
 		);
 	}
-});
+}
 
 const mapStateToProps = state => {
 	return {
@@ -147,6 +146,6 @@ const mapDispatchToProps = dispatch => {
 	};
 }
 
-AddForm = connect(mapStateToProps, mapDispatchToProps)(AddForm);
 
-export default AddForm;
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddForm);

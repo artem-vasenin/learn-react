@@ -3,22 +3,23 @@ import {connect} from 'react-redux';
 import {deleteBook, editBook} from '../actions';
 import Book from './Book';
 
-let BookList = React.createClass({
-	componentWillReceiveProps: function(newProps) {
-		this.setState({data: newProps.data});
-	},
-	getInitialState: function() {
-		return {
+class BookList extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
 			data: []
 		}
-	},
-    deleteBook: function (index) {
+	}
+	componentWillReceiveProps(newProps) {
+		this.setState({data: newProps.data});
+	}
+    deleteBook = (index) => {
 		this.props.deleteBook(index);
-	},
-	editBook: function (itemObj) {
+	}
+	editBook = (itemObj) => {
 		this.props.editBook(itemObj);
-	},
-	render: function () {
+	}
+	render () {
 		let booksArr = this.state.data.map(function (item, index) {
 			item.index = index;
 			return (
@@ -45,7 +46,7 @@ let BookList = React.createClass({
 			</div>
 		);
 	}
-});
+}
 
 const mapStateToProps = state => {
 	return {
