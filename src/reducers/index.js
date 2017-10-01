@@ -6,9 +6,9 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-    let newState = Object.assign({}, state),
-        newData = Object.assign([], state.data),
-        newCurrentBook = Object.assign([], state.currentBook);
+    let newState = {...state},
+        newData = [...state.data],
+        newCurrentBook = {...state.currentBook};
     switch (action.type) {
         case actionTypes.ADD_BOOK:
             newData.push(action.currentBook);
