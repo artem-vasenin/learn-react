@@ -23,6 +23,7 @@ class AddForm extends React.Component<IProps, IState> {
 			currentBook: {}
 		};
 	}
+
 	componentWillReceiveProps(newProps) {
 		this.setState({currentBook: newProps.currentBook});
 	}
@@ -34,7 +35,8 @@ class AddForm extends React.Component<IProps, IState> {
 			author: this.state.currentBook.author,
 			year: this.state.currentBook.year,
 			pages: this.state.currentBook.pages,
-			desc: this.state.currentBook.desc
+			desc: this.state.currentBook.desc,
+			index: undefined
 		};
 
 		if (this.state.submit === ' disabled' || (!currentBook.title && !currentBook.author)) {
@@ -81,7 +83,6 @@ class AddForm extends React.Component<IProps, IState> {
 					<input
 						className='textfield textfield--title'
 						name='title'
-						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
 						value={this.state.currentBook.title !== undefined ? this.state.currentBook.title : ''}
 						placeholder='Обязательно для заполнения'
@@ -93,7 +94,6 @@ class AddForm extends React.Component<IProps, IState> {
 					<input
 						className='textfield textfield--author'
 						name='author'
-						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
 						value={this.state.currentBook.author !== undefined ? this.state.currentBook.author : ''}
 						placeholder='Обязательно для заполнения'
@@ -104,7 +104,6 @@ class AddForm extends React.Component<IProps, IState> {
 					<input
 						className='textfield textfield--year'
 						name='year'
-						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
 						value={this.state.currentBook.year !== undefined ? this.state.currentBook.year : ''}
 					/>
@@ -114,7 +113,6 @@ class AddForm extends React.Component<IProps, IState> {
 					<input
 						className='textfield textfield--pages'
 						name='pages'
-						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
 						value={this.state.currentBook.pages !== undefined ? this.state.currentBook.pages : ''}
 					/>
@@ -124,7 +122,6 @@ class AddForm extends React.Component<IProps, IState> {
 					<textarea
 						className='textfield textfield--desc'
 						name='desc'
-						onBlur={this.handleFieldBlur}
 						onChange={this.handleFieldChange}
 						value={this.state.currentBook.desc !== undefined ? this.state.currentBook.desc : ''}
 					></textarea>
@@ -133,7 +130,7 @@ class AddForm extends React.Component<IProps, IState> {
 					<button
 						className={'button' + this.state.submit}
 						onClick={this.handleSaveClick}
-						disabled={this.state.submit}
+						disabled={this.state.submit?true:false}
 					>
 						{this.props.currentBook.index === undefined ? 'Добавить книгу' : 'Редактировать'}
 					</button>
