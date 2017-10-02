@@ -1,6 +1,20 @@
 import React from 'react';
+import {IBook} from '../models';
 
-export default class Book extends React.Component {
+interface IProps {
+	index: number;
+	item: IBook;
+	count: number;
+	deleteBook: (index: number) => void;
+	editBook: (index: IBook) => void;
+}
+
+interface IState {
+	description: string;
+	update: boolean;
+}
+
+export default class Book extends React.Component<IProps, IState> {
 	constructor(props) {
 		super(props);
 		this.state = {

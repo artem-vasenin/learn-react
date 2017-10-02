@@ -1,8 +1,21 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {addBook, updateBook} from '../actions';
+import {IBook} from '../models';
 
-class AddForm extends React.Component{
+interface IProps {
+	updateBook: (currentBook: IBook) => void;
+	addBook: (currentBook: IBook) => void;
+	currentBook: IBook;
+	data: IBook[];
+}
+
+interface IState {
+	submit: string;
+	currentBook: IBook;
+}
+
+class AddForm extends React.Component<IProps, IState> {
 	constructor (props) {
 		super(props);
 		this.state = {

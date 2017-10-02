@@ -1,4 +1,5 @@
 import actionTypes from '../constants';
+import {IBook} from '../models';
 
 const initialState = {
     data: [],

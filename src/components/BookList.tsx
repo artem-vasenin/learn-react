@@ -1,9 +1,20 @@
-import React from 'react';
+import * as React from 'react';
 import {connect} from 'react-redux';
 import {deleteBook, editBook} from '../actions';
 import Book from './Book';
+import {IBook} from '../models';
 
-class BookList extends React.Component {
+interface IProps {
+	data: IBook[];
+	deleteBook: (index: number) => void;
+	editBook: (index: number) => void;
+}
+
+interface IState {
+	data: IBook[];
+}
+
+class BookList extends React.Component<IProps, IState> {
 	constructor(props) {
 		super(props);
 		this.state = {
