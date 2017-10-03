@@ -6,3 +6,8 @@ export interface IBook {
     desc?: string;
     index?: number;
 }
+
+export interface IGlobalState {
+    data: IBook[];
+    currentBook: IBook;
+}

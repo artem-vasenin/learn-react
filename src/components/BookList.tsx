@@ -2,12 +2,12 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {deleteBook, editBook} from '../actions';
 import Book from './Book';
-import {IBook} from '../models';
+import {IBook, IGlobalState} from '../models';
 
 interface IProps {
 	data: IBook[];
 	deleteBook: (index: number) => void;
-	editBook: (index: number) => void;
+	editBook: (item: IBook) => void;
 }
 
 interface IState {
@@ -15,23 +15,23 @@ interface IState {
 }
 
 class BookList extends React.Component<IProps, IState> {
-	constructor(props) {
+	constructor(props: IProps) {
 		super(props);
 		this.state = {
 			data: []
-		}
+		};
 	}
-	componentWillReceiveProps(newProps) {
+	componentWillReceiveProps(newProps:IProps) {
 		this.setState({data: newProps.data});
 	}
-    deleteBook = (index) => {
+    deleteBook = (index: number) => {
 		this.props.deleteBook(index);
 	}
-	editBook = (itemObj) => {
+	editBook = (itemObj: IBook) => {
 		this.props.editBook(itemObj);
 	}
 	render () {
-		let booksArr = this.state.data.map(function (item, index) {
+		let booksArr = this.state.data.map(function (item: IBook, index: number) {
 			item.index = index;
 			return (
 				<Book
@@ -59,20 +59,20 @@ class BookList extends React.Component<IProps, IState> {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IGlobalState) => {
 	return {
         data: state.data
     };
 }
-const mapdispatchtoprops = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
 	return {
-		deleteBook: (index) => {
+		deleteBook: (index: number) => {
 			dispatch(deleteBook(index));
 		},
-		editBook: (itemObj) => {
+		editBook: (itemObj: IBook) => {
 			dispatch(editBook(itemObj));
 		}
 	};
 }
 
-export default connect(mapStateToProps, mapdispatchtoprops)(BookList);
+export default connect(mapStateToProps, mapDispatchToProps)(BookList);

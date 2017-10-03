@@ -1,12 +1,12 @@
 import actionTypes from '../constants';
-import {IBook} from '../models';
+import {IBook, IGlobalState} from '../models';
 
-const initialState = {
+const initialState: IGlobalState = {
     data: [],
     currentBook: {}
 };
 
-export default function reducer(state = initialState, action) {
+export function reducer(state: IGlobalState = initialState, action: any) {
     let newState = {...state},
         newData = [...state.data],
         newCurrentBook = {...state.currentBook};

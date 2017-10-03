@@ -1,7 +1,8 @@
-import React from 'react';
+import * as React from 'react';
+import * as Redux from 'redux';
 import {connect} from 'react-redux';
 import {addBook, updateBook} from '../actions';
-import {IBook} from '../models';
+import {IBook, IGlobalState} from '../models';
 
 interface IProps {
 	updateBook: (currentBook: IBook) => void;
@@ -16,15 +17,15 @@ interface IState {
 }
 
 class AddForm extends React.Component<IProps, IState> {
-	constructor (props) {
+	constructor (props: IProps) {
 		super(props);
 		this.state = {
-			submit: ' disabled',
+			submit: 'disabled',
 			currentBook: {}
 		};
 	}
 
-	componentWillReceiveProps(newProps) {
+	componentWillReceiveProps(newProps: IProps) {
 		this.setState({currentBook: newProps.currentBook});
 	}
 	handleSaveClick = (e) => {
@@ -39,7 +40,7 @@ class AddForm extends React.Component<IProps, IState> {
 			index: undefined
 		};
 
-		if (this.state.submit === ' disabled' || (!currentBook.title && !currentBook.author)) {
+		if (this.state.submit === 'disabled' || (!currentBook.title && !currentBook.author)) {
 			return;
 		}
 
@@ -51,7 +52,7 @@ class AddForm extends React.Component<IProps, IState> {
 		}
 
 		this.setState({
-			submit: ' disabled',
+			submit: 'disabled',
 			currentBook: {}
 		});
 	}
@@ -72,7 +73,7 @@ class AddForm extends React.Component<IProps, IState> {
 		if (this.state.currentBook.title && this.state.currentBook.author) {
 			this.setState({submit: '', currentBook: newBook});
 		} else {
-			this.setState({submit:  ' disabled', currentBook: newBook});
+			this.setState({submit:  'disabled', currentBook: newBook});
 		}
 	}
 	render() {
@@ -128,7 +129,7 @@ class AddForm extends React.Component<IProps, IState> {
 				</label>
 				<div className='button-block'>
 					<button
-						className={'button' + this.state.submit}
+						className={`button ${this.state.submit}`}
 						onClick={this.handleSaveClick}
 						disabled={this.state.submit?true:false}
 					>
@@ -140,22 +141,20 @@ class AddForm extends React.Component<IProps, IState> {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IGlobalState) => {
 	return {
         currentBook: state.currentBook
     };
 }
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
 	return {
-		addBook: (itemObject) => {
+		addBook: (itemObject: IBook) => {
 			dispatch(addBook(itemObject));
 		},
-		updateBook: (itemObject) => {
+		updateBook: (itemObject: IBook) => {
 			dispatch(updateBook(itemObject));
 		}
 	};
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddForm);

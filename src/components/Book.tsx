@@ -1,24 +1,24 @@
-import React from 'react';
+import * as React from 'react';
 import {IBook} from '../models';
 
 interface IProps {
-	index: number;
 	item: IBook;
+	index: number;
 	count: number;
+	editBook: (item: IBook) => void;
 	deleteBook: (index: number) => void;
-	editBook: (index: IBook) => void;
 }
 
 interface IState {
-	description: string;
 	update: boolean;
+	description: string;
 }
 
 export default class Book extends React.Component<IProps, IState> {
-	constructor(props) {
+	constructor(props: IProps) {
 		super(props);
 		this.state = {
-			description: ' hide',
+			description: 'hide',
 			update: false
 		}
 	}
@@ -28,7 +28,7 @@ export default class Book extends React.Component<IProps, IState> {
 		if (this.state.description) {
 			this.setState({description: ''});
 		} else {
-			this.setState({description: ' hide'});
+			this.setState({description: 'hide'});
 		}
 	}
 	handleDelete = () => {
@@ -50,7 +50,7 @@ export default class Book extends React.Component<IProps, IState> {
 					{item.year || '---'}г
 					({item.pages || '---'} стр)
 				</span>
-				<p className={'desc' + this.state.description}>{item.desc || 'Описание отсутствует'}</p>
+				<p className={`desc ${this.state.description}`}>{item.desc || 'Описание отсутствует'}</p>
 				<span className='list__buttons'>
 					<button className='button button--green' onClick={this.handleEdit} >&#9998;</button>
 					<button className='button button--red' onClick={this.handleDelete}>&otimes;</button>
