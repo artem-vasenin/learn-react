@@ -1,5 +1,5 @@
 import actionTypes from '../constants';
-import {IBook, IGlobalState} from '../models';
+import {IGlobalState} from '../models';
 
 const initialState: IGlobalState = {
     data: [],
