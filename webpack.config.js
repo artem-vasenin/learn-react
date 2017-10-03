@@ -6,7 +6,7 @@ var precss = require('precss')
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
-  entry: [ //откула начинать сборку
+  entry: [ //откуда начинать сборку
     'webpack-hot-middleware/client', //добавить поддержку hot-reload
     'babel-polyfill',
     './src/index'
@@ -27,7 +27,7 @@ module.exports = {
         test: /\.js$/,
         loaders: ['eslint'],
         include: [
-          path.resolve(__dirname, "src")
+          path.resolve(__dirname, 'src')
         ]
       }
     ],
@@ -35,17 +35,21 @@ module.exports = {
       {
         loaders: ['react-hot', 'babel-loader'],
         include: [
-          path.resolve(__dirname, "src") //обработка файлов babel-loader'ом
+          path.resolve(__dirname, 'src') //обработка файлов babel-loader'ом
         ],
         test: /\.js$/,
         plugins: ['transform-runtime']
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader!postcss-loader"
+        loader: 'style-loader!css-loader!postcss-loader'
       },
       {
         test: /\.tsx?$/, loader: 'ts-loader'
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ],
     postcss: function() {
