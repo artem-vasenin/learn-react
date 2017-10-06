@@ -9,8 +9,8 @@ import './css/style.css';
 const container = document.getElementById('root');
 
 ReactDOM.render(
-    <Provider store={store}>
-        <Library />
-    </Provider>,
-    container
+	<Provider store={store}>
+		<Library />
+	</Provider>,
+	container
 );
