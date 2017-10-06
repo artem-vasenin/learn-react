@@ -10,6 +10,8 @@
   "author": "Artem Isaenok",
   "license": "MIT",
   "dependencies": {
+    "@types/react": "16.0.9",
+    "@types/redux": "3.6.0",
     "autoprefixer": "7.1.2",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
